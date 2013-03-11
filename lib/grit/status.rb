@@ -90,27 +90,26 @@ module Grit
       def construct_status
         @files = ls_files
 
-        Dir.chdir(@base.working_dir) do
-          # find untracked in working dir
-          Dir.glob('**/*') do |file|
-            if !@files[file]
-              @files[file] = {:path => file, :untracked => true} if !File.directory?(file)
-            end
+        # find untracked in working dir
+        Dir.glob(File.join(@base.working_dir, '**/*')) do |full_file|
+          file = full_file.gsub "#{@base.working_dir}/", ""
+          if !@files[file]
+            @files[file] = {:path => file, :untracked => true} if !File.directory?(file)
           end
+        end
 
-          # find modified in tree
-         diff_files.each do |path, data|
-            @files[path] ? @files[path].merge!(data) : @files[path] = data
-          end
+        # find modified in tree
+        diff_files.each do |path, data|
+          @files[path] ? @files[path].merge!(data) : @files[path] = data
+        end
 
-          # find added but not committed - new files
-          diff_index('HEAD').each do |path, data|
-            @files[path] ? @files[path].merge!(data) : @files[path] = data
-          end
+        # find added but not committed - new files
+        diff_index('HEAD').each do |path, data|
+          @files[path] ? @files[path].merge!(data) : @files[path] = data
+        end
 
-          @files.each do |k, file_hash|
-            @files[k] = StatusFile.new(@base, file_hash)
-          end
+        @files.each do |k, file_hash|
+          @files[k] = StatusFile.new(@base, file_hash)
         end
       end
 

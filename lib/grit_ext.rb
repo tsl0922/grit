@@ -9,12 +9,21 @@ require "grit_ext/version"
 module GritExt
   extend self
 
-  def encode!(message)
-    return nil unless message.respond_to? :force_encoding
+  def encode!(raw_message)
+    return nil unless raw_message.respond_to? :force_encoding
 
+    message = raw_message.dup
     # if message is utf-8 encoding, just return it
     message.force_encoding("UTF-8")
     return message if message.valid_encoding?
+    
+    %w(GBK GB2312 GB18030 BIG5).each do |enc|
+      message.force_encoding(enc)
+      if message.valid_encoding?
+        raw_message.force_encoding(enc)
+        return message.encode("UTF-8")
+      end
+    end
 
     # return message if message type is binary
     detect = CharlockHolmes::EncodingDetector.detect(message)

@@ -129,12 +129,13 @@ module Grit
           already[name] = true
         end
       end
-      packed = File.join(prefix, 'packed-refs')
+
+      packed = File.join(@git_dir, 'packed-refs')
       if File.file?(packed)
         File.readlines(packed).each do |line|
           if m = /^(\w{40}) (.*?)$/.match(line)
             next if !Regexp.new('^' + orig_prefix).match(m[2])
-            name = m[2].sub("#{prefix}/", '')
+            name = m[2].sub("#{orig_prefix}/", '')
             if !already[name]
               refs << "#{name} #{m[1]}"
               already[name] = true

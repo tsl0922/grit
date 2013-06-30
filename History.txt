@@ -1,3 +1,10 @@
+== 2.6.0
+  * More stable commit parsinga
+  * Handle filenames with spaces
+  * Grep search
+  * Remove Dir.chdir for thread safety.
+
+
 == 2.5.0 / 2012-04-22
   * Minor Enhancements
     * 100% Git-compliant actor creation.

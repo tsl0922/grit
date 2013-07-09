@@ -173,7 +173,7 @@ module Grit
         k = obj.name
         k += '/' if (obj.class == Grit::Tree)
         tmode = obj.mode.to_i.to_s  ## remove zero-padding
-        tree_contents[k] = "%s %s\0%s" % [tmode, obj.name, sha]
+        tree_contents[k] = "%s %s\0%s" % [tmode, obj.name.force_encoding("ASCII-8BIT"), sha]
       end if now_tree
 
       # overwrite with new tree contents

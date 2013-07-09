@@ -21,7 +21,7 @@ module GritExt
       message.force_encoding(enc)
       if message.valid_encoding?
         raw_message.force_encoding(enc)
-        return message.encode("UTF-8")
+        return message.replace clean(message)
       end
     end
 

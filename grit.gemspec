@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name        = 'gitlab-grit'
+  s.name        = 'grit'
   s.version     = '2.6.0'
   s.date        = '2013-05-06'
   s.license     = 'MIT'

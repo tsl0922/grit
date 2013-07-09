@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'gitlab-grit'
-  s.version     = '2.5.1'
+  s.version     = '2.6.0'
   s.date        = '2013-05-06'
   s.license     = 'MIT'
   s.summary     = "Ruby Git bindings."

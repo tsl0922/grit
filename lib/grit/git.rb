@@ -167,11 +167,7 @@ module Grit
     end
 
     def list_remotes
-      remotes = []
-      Dir.chdir(File.join(self.git_dir, 'refs/remotes')) do
-        remotes = Dir.glob('*')
-      end
-      remotes
+      Dir.glob(File.join(self.git_dir, 'refs/remotes/*'))
     rescue
       []
     end

@@ -170,10 +170,11 @@ module Grit
       now_tree = read_tree(now_tree) if(now_tree && now_tree.is_a?(String))
       now_tree.contents.each do |obj|
         sha = [obj.id].pack("H*")
-        k = obj.name
+        obj_name = obj.name.force_encoding("ASCII-8BIT")
+        k = obj_name
         k += '/' if (obj.class == Grit::Tree)
         tmode = obj.mode.to_i.to_s  ## remove zero-padding
-        tree_contents[k] = "%s %s\0%s" % [tmode, obj.name.force_encoding("ASCII-8BIT"), sha]
+        tree_contents[k] = "%s %s\0%s" % [tmode, obj_name, sha]
       end if now_tree
 
       # overwrite with new tree contents
